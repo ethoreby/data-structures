@@ -21,7 +21,6 @@ var makeQueue = function(){
       size--;
       return result;
     }
-
   };
 
   instance.size = function(){
