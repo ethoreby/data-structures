@@ -32,7 +32,7 @@ describe("linkedList", function() {
     expect(linkedList.head.value).to.equal(4);
     console.log(linkedList)
     linkedList.removeHead();
-        console.log(linkedList) 
+        console.log(linkedList)
     expect(linkedList.head.value).to.equal(5);
   });
 
@@ -49,6 +49,25 @@ describe("linkedList", function() {
     linkedList.addToTail(5);
     linkedList.removeHead();
     assert.isFalse(linkedList.contains(4));
+  });
+
+  it("should add a node to head", function(){
+    linkedList.addToHead(5);
+    linkedList.addToHead(4);
+    expect(linkedList.head.value).to.equal(4);
+  });
+
+  it("should add nodes to tail then head correctly", function(){
+    linkedList.addToTail(5);
+    linkedList.addToHead(4);
+    expect(linkedList.head.value).to.equal(4);
+    expect(linkedList.tail.value).to.equal(5);
+  });
+
+  it("should reference nodes with previous property", function(){
+    linkedList.addToTail(5);
+    linkedList.addToTail(4);
+    expect(linkedList.tail.previous.value).to.equal(5);
   });
 
   // add more tests here to test the functionality of linkedList
