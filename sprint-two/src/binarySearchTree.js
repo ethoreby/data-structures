@@ -17,6 +17,7 @@ var makeBinarySearchTree = function(value, depth){
 //maybe refactor to a 'finder' function as a helper to insert and contains
 
 var binarySearchTreeMethods = {
+  // refactor to make more DRY
   insert: function(value, context) {
     context = context || this;
 
@@ -29,6 +30,7 @@ var binarySearchTreeMethods = {
           context.maxDepth = this.currentDepth + 1;
         }
         context.size++;
+        context.evaluateSize();
       }
     }else if(this.value < value) {
       if(this.right) {
@@ -39,11 +41,25 @@ var binarySearchTreeMethods = {
           context.maxDepth = this.currentDepth + 1;
         }
         context.size++;
+        context.evaluateSize();
       }
     }
   },
 
-
+  evaluateSize: function() {
+    var floor = 1;
+    var ceiling = (floor * 2) - 1;
+    var minDepth = 0;
+    while (this.size > ceiling) {
+      floor *= 2;
+      ceiling = (floor * 2) - 1;
+      minDepth++;
+    }
+    if (this.maxDepth >= (minDepth * 2)) {
+      console.log('new depth: ' + minDepth);
+      // this.rebalanceTree();
+    }
+  },
 
   contains: function(target) {
     var found = false;
