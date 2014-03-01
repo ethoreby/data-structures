@@ -2,7 +2,7 @@ var expect = chai.expect;
 
 describe("hashTable", function() {
   var hashTable;
-  var people = [["Steven", "Tyler"], ["George", "Harrison"], ["Mr.", "Doob"], ["Dr.", "Sunshine"], ["John", "Resig"], ["Brendan", "Eich"], ["Alan", "Turing"]];
+  var people = [["Steven", "Tyler"], ["George", "Harrison"], ["Mr.", "Doob"], ["Dr.", "Sunshine"], ["John", "Resig"], ["Brendan", "Eich"], ["Alan", "Turing"], ["borat", "borat"], ["borat2", "borat2"]];
 
 
   beforeEach(function() {
@@ -41,7 +41,7 @@ describe("hashTable", function() {
   });
 
   // (Extra credit! Remove the extra 'x' when you want the following tests to run)
-  xit("should double in size when needed", function() {
+  it("should double in size when needed", function() {
     for (var i = 0; i < people.length; i++){
       var firstName = people[i][0], lastName = people[i][1];
       hashTable.insert(firstName,lastName);
