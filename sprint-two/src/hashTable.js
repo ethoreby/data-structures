@@ -7,11 +7,11 @@ HashTable.prototype.insert = function(k, v){
   var i = getIndexBelowMaxForKey(k, this._limit);
   var size;
   var capacity;
-  if (!this._storage[i]) {
-    this._storage[i] = [];
+  if (!this._storage.get(i)) {
+    this._storage.set(i, []);
   }
-  this._storage[i].push([k, v]);
-  size = this.size();
+  this._storage.get(i).push([k, v]);
+  size = this.getSize();
   capacity = size / this._limit;
   if (capacity >= 0.75) {
     this.doubleCapacity();
@@ -20,7 +20,7 @@ HashTable.prototype.insert = function(k, v){
 
 HashTable.prototype.retrieve = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
-  var bucket = this._storage[i];
+  var bucket = this._storage.get(i);
   var current;
   if (!bucket) {
     return null;
@@ -38,15 +38,15 @@ HashTable.prototype.remove = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
   var size;
   var capacity;
-  this._storage[i] = null;
-  size = this._storage.length;
+  this._storage.set(i, null);
+  size = this.getSize();
   capacity = size / this._limit;
   if (capacity <= 0.25) {
-    halfCapacity();
+    this.halfCapacity();
   }
 };
 
-HashTable.prototype.size = function(){
+HashTable.prototype.getSize = function(){
   var result = 0;
   this._storage.each(function(bucket){
     if (bucket) {
@@ -58,22 +58,21 @@ HashTable.prototype.size = function(){
 
 HashTable.prototype.doubleCapacity = function(){
   this._limit *= 2;
+  var context = this;
 
+  var oldLimitedArray = this._storage;
+  this._storage = makeLimitedArray(this._limit);
   var callback = function(bucket, currentHash) {
     if (bucket) {
       bucket.forEach(function(item) {
         var newHash = getIndexBelowMaxForKey(item[0], this._limit);
-        if (currentHash !== newHash) {
-          var index = bucket.indexOf[item];
-          bucket = bucket.slice(0, index - 1).concat(bucket.slice(index + 1, bucket.length));
-          this._storage[newHash].push(item);
-        }
+        context.insert(item[0], item[1]);
       });
     }
   };
 
-  this._storage.each(callback);
+  oldLimitedArray.each(callback);
 };
 
 HashTable.prototype.halfCapacity = function(){
-};
+ };
