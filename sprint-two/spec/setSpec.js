@@ -27,4 +27,22 @@ describe("set", function() {
     assert.isFalse(set.contains('Mel Gibson'));
   });
 
+  it("should differentiate numbers and strings", function(){
+    set.add('1');
+    set.add(1);
+    assert.isTrue(set.contains('1'));
+    assert.isTrue(set.contains(1));
+    assert.isFalse(set.contains('3'));
+    assert.isFalse(set.contains(3));
+  });
+
+  it("should hold objects", function(){
+    set.add({a:1, b:2});
+    set.add({foo: "bar"});
+    assert.isTrue(set.contains({a:1, b:2}));
+    assert.isTrue(set.contains({foo: "bar"}));
+    assert.isFalse(set.contains('3'));
+    assert.isFalse(set.contains(3));
+  });
+
 });

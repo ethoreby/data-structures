@@ -36,7 +36,9 @@ describe("binarySearchTree", function() {
     binarySearchTree.insert(2);
     binarySearchTree.insert(3);
     binarySearchTree.depthFirstLog(func);
+    binarySearchTree.breadthFirstLog();
     expect(array).to.equal([5,2,3]);
     // assert.notStrictEqual(array, [5,2,3]);
   });
+
 });
