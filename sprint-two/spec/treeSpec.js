@@ -44,4 +44,29 @@ describe("tree", function() {
     assert.isTrue(tree.contains(8));
   });
 
+  it("should correctly store a reference to the parent", function(){
+    tree.addChild(5);
+    expect(tree.children[0].parent.value).to.equal(null);
+  });
+
+  it("should correctly navigate up through multiple parent references", function(){
+    tree.addChild(5);
+    tree.children[0].addChild(4);
+    tree.children[0].children[0].addChild(3);
+    expect(tree.children[0].children[0].children[0].parent.parent.value).to.equal(5);
+  });
+
+  it("should correctly remove reference to child from parent", function() {
+    tree.addChild(5);
+    tree.children[0].removeFromParent();
+    expect(tree.children.length).to.equal(0);
+  });
+
+  it("should correctly remove reference to parent from child", function() {
+    tree.addChild(5);
+    var orphan = tree.children[0];
+    tree.children[0].removeFromParent();
+    expect(orphan.parent).to.equal(null);
+  });
+
 });

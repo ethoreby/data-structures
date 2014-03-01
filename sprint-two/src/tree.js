@@ -1,7 +1,10 @@
-var makeTree = function(value){
+// normally, constructor functions have the first letter
+// capitalized, but this breaks our test
+var makeTree = function(value, parent){
   var newTree = {};
-  newTree.value = value;
+  newTree.value = value || null;
   newTree.children = [];
+  newTree.parent = parent || null;
   for (var key in treeMethods) {
     newTree[key] = treeMethods[key];
   }
@@ -12,7 +15,7 @@ var makeTree = function(value){
 var treeMethods = {};
 
 treeMethods.addChild = function(value){
-  var childTree = makeTree(value);
+  var childTree = makeTree(value, this);
   this.children.push(childTree);
 };
 
@@ -30,6 +33,13 @@ treeMethods.contains = function(target){
       break;
     }
   }
+
+treeMethods.removeFromParent = function() {
+  var parentsChildren = this.parent.children;
+  var index = parentsChildren.indexOf(this);
+  this.parent.children = parentsChildren.slice(0, index - 1).concat(parentsChildren.slice(index + 1, parentsChildren.length));
+  this.parent = null;
+};
 
   return result;
 };
