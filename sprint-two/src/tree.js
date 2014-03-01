@@ -33,6 +33,8 @@ treeMethods.contains = function(target){
       break;
     }
   }
+  return result;
+};
 
 treeMethods.removeFromParent = function() {
   var parentsChildren = this.parent.children;
@@ -41,5 +43,9 @@ treeMethods.removeFromParent = function() {
   this.parent = null;
 };
 
-  return result;
+treeMethods.traverse = function(callback) {
+  callback(this.value);
+  this.children.forEach(function(child) {
+    child.traverse(callback);
+  });
 };

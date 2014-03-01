@@ -49,7 +49,7 @@ describe("hashTable", function() {
     expect(hashTable._limit).to.equal(16);
   });
 
-  xit("should halve in size when needed", function() {
+  it("should halve in size when needed", function() {
     for (var i = 0; i < people.length; i++){
       var firstName = people[i][0], lastName = people[i][1];
       hashTable.insert(firstName,lastName);

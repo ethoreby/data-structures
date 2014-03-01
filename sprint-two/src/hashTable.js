@@ -14,7 +14,8 @@ HashTable.prototype.insert = function(k, v){
   size = this.getSize();
   capacity = size / this._limit;
   if (capacity >= 0.75) {
-    this.doubleCapacity();
+    this._limit *= 2;
+    this.rebuildStorage();
   }
 };
 
@@ -42,7 +43,8 @@ HashTable.prototype.remove = function(k){
   size = this.getSize();
   capacity = size / this._limit;
   if (capacity <= 0.25) {
-    this.halfCapacity();
+    this._limit /= 2;
+    this.rebuildStorage();
   }
 };
 
@@ -56,8 +58,7 @@ HashTable.prototype.getSize = function(){
   return result;
 };
 
-HashTable.prototype.doubleCapacity = function(){
-  this._limit *= 2;
+HashTable.prototype.rebuildStorage = function(){
   var context = this;
 
   var oldLimitedArray = this._storage;
@@ -73,6 +74,3 @@ HashTable.prototype.doubleCapacity = function(){
 
   oldLimitedArray.each(callback);
 };
-
-HashTable.prototype.halfCapacity = function(){
- };

@@ -69,4 +69,14 @@ describe("tree", function() {
     expect(orphan.parent).to.equal(null);
   });
 
+  it("should run callback function on every tree in a call of traverse", function(){
+    tree.addChild(1);
+    tree.addChild(2);
+    tree.children[1].addChild(3);
+    var expected = [];
+    expect(tree.traverse(function(value) {
+      expected.push(value + 1);
+    }), [2,3,4]);
+  });
+
 });
